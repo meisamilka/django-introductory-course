@@ -1,0 +1,6 @@
+# requirements.txt
+
+asgiref==3.9.0
+Django>=5.2,<5.3
+sqlparse==0.5.3
+tzdata==2025.2
