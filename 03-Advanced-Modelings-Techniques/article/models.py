@@ -12,18 +12,30 @@ class Person(models.Model):
         return self.name
 
 
-class Teacher(models.Model):
-    name = models.CharField(max_length=100)
-    family = models.CharField(max_length=100)
-    age = models.IntegerField()
-    teachercode = models.CharField(max_length=20, unique=True, null=True)
-
-    def __str__(self):
-        return f"{self.name} {self.family}"
+class Gender(models.IntegerChoices):
+    MALE = 'male', 'Male'
+    FEMALE = 'female', 'Female'
+    OTHER = 'other', 'Other'
 
 
-class UserProfile(models.Model):
-    national_id = models.CharField(
-        max_length=10, unique=True, null=True, blank=True)
-    first_name = models.CharField(max_length=100, null=True, blank=True)
-    last_name = models.CharField(max_length=100, null=True, blank=True)
+class User(models.Model):
+    username = models.CharField(max_length=100, unique=True, blank=True)
+    password = models.CharField(max_length=100)
+    gender = models.CharField(
+        max_length=6, choices=Gender.choices, default=Gender.OTHER)
+    last_updated = models.DateTimeField(auto_now=True, editable=False)
+
+
+
+
+# class Gender(models.IntegerChoices):
+#     MALE = 1, 'Male'
+#     FEMALE = 2, 'Female'
+#     OTHER = 3, 'Other'
+
+
+# class User(models.Model):
+#     username = models.CharField(max_length=100, unique=True, blank=True)
+#     password = models.CharField(max_length=100)
+#     gender = models.IntegerField(choices=Gender.choices, default=Gender.OTHER)
+#     last_updated = models.DateTimeField(auto_now=True, editable=False)
