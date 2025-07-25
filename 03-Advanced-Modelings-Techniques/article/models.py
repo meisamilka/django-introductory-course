@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.text import slugify
+
 
 # Create your models here.
 
@@ -12,7 +14,7 @@ class Person(models.Model):
         return self.name
 
 
-class Gender(models.IntegerChoices):
+class Gender(models.TextChoices):
     MALE = 'male', 'Male'
     FEMALE = 'female', 'Female'
     OTHER = 'other', 'Other'
@@ -26,8 +28,6 @@ class User(models.Model):
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 
 
-
-
 # class Gender(models.IntegerChoices):
 #     MALE = 1, 'Male'
 #     FEMALE = 2, 'Female'
@@ -39,3 +39,17 @@ class User(models.Model):
 #     password = models.CharField(max_length=100)
 #     gender = models.IntegerField(choices=Gender.choices, default=Gender.OTHER)
 #     last_updated = models.DateTimeField(auto_now=True, editable=False)
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, unique=True,
+                            editable=False, allow_unicode=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)
+
+
+# jadadiftarin haye ai
+# milka.com/jadadiftarin-haye-ai
